@@ -9,7 +9,9 @@ import javax.persistence.Table;
 @Table(name = "sfbzh_nrb")
 public class SFBZHNRB {
     /**
-     * 	只需要具有搜索功能即可，所以就不指定别的信息
+     * 	文件编号是指用来说明这条记录是属于哪一个文件的，
+     * 	序号是指在同一个文件编号下，该文件各部分内容的组织顺序
+     * 	标题是指文件的某一部分的小标题
      */
     private int BH;     //编号
     private int WJBH;   //文件编号

@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "sfbzh_wjb")
-public class Sfbzhwjb {
+public class SFBZHWJB {
     /**
      * 	只需要具有搜索功能即可，所以就不指定别的信息
      */
