@@ -12,11 +12,13 @@ public class SFBZHNRB {
      * 	文件编号是指用来说明这条记录是属于哪一个文件的，
      * 	序号是指在同一个文件编号下，该文件各部分内容的组织顺序
      * 	标题是指文件的某一部分的小标题
+     * 	内容是该段落的内容
      */
     private int BH;     //编号
     private int WJBH;   //文件编号
     private int XH;     //序号
     private String BT;  //标题
+    private String NR;  //内容
 
     @Id
     @Column(name = "BH", nullable = false, unique = true, length = 1)
@@ -59,7 +61,5 @@ public class SFBZHNRB {
     public void setNR(String NR) {
         this.NR = NR;
     }
-
-    private String NR;  //内容
 
 }

@@ -1,7 +1,7 @@
 package cn.edu.nju.software.test;
 
 import cn.edu.nju.software.model.entity.Person;
-import cn.edu.nju.software.service.exampleService;
+import cn.edu.nju.software.service.ExampleService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
@@ -61,8 +61,8 @@ public class hibtest {
      */
     @Test
     public void testService() throws SQLException {
-        exampleService exampleService =  (exampleService) ctx.getBean("exampleService");
-        exampleService.savePerson();
+        ExampleService ExampleService =  (ExampleService) ctx.getBean("exampleService");
+        ExampleService.savePerson();
     }
 
 }
