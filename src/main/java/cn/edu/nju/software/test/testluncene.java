@@ -46,13 +46,11 @@ public class testluncene {
         File indexDir = new File(Constant.IndexPath);
         if (!indexDir.exists()) {
             indexDir.mkdirs();
-
         }
         // 创建索引
         IndexWriterConfig iwc = new IndexWriterConfig(Constant.Analyzer);
         // 设置模式
         iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
-
         IndexWriter indexWriter = null;
         try {
             indexWriter = new IndexWriter(FSDirectory.open(indexDir.toPath()),

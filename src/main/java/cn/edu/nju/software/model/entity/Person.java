@@ -7,8 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "jpa_persons")
+@Entity(name = "jpa_persons")
 public class Person {
 
     private String id;

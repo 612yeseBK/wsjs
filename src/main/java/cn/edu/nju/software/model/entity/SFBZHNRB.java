@@ -5,8 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "sfbzh_nrb")
+@Entity(name = "sfbzh_nrb")
 public class SFBZHNRB {
     /**
      * 	文件编号是指用来说明这条记录是属于哪一个文件的，

@@ -5,8 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "sfbzh_wjb")
+@Entity(name = "sfbzh_wjb")
 public class SFBZHWJB {
     /**
      * 	只需要具有搜索功能即可，所以就不指定别的信息

@@ -11,8 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WordsSplit {
+
     private static Logger log = Logger.getLogger(WordsSplit.class);
 
+    /**
+     * 将输入的句子进行分词，返回分词之后的列表
+     * @param sentence 输入的句子
+     * @return
+     */
     public static List<String> getWords(String sentence) {
         String keyword = sentence;
         List<String> tokens = new ArrayList<String>();
