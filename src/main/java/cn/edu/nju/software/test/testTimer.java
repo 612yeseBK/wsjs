@@ -1,7 +1,6 @@
 package cn.edu.nju.software.test;
 
-import cn.edu.nju.software.util.updateTask;
-import org.junit.Test;
+import cn.edu.nju.software.util.UpdateTask;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +21,6 @@ public class testTimer {
         System.out.println(date);
         int period = 6 * 1000;
         timer = new Timer("lucene更新");
-        timer.schedule(new updateTask(),date, period);//每天一点开始，每隔24小时执行该任务
+        timer.schedule(new UpdateTask(),date, period);//每天一点开始，每隔24小时执行该任务
     }
 }

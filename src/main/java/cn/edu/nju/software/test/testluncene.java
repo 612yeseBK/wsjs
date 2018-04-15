@@ -115,6 +115,7 @@ public class testluncene {
         scoreDocs = topDocs.scoreDocs;
         for (int i = 0; i < scoreDocs.length; i++) {
             int doc1 = scoreDocs[i].doc;
+            log.info(scoreDocs[i]);
             Document document = searcher.doc(doc1);
             System.out.println("第" + i + "篇");
             System.out.println("编号:" + document.get("bh"));
@@ -150,6 +151,48 @@ public class testluncene {
             System.out.println("编号:" + document.get("bh"));
             System.out.println(document.get("bt"));
             System.out.println(document.get("wsnr"));
+        }
+        reader.close();
+    }
+
+    @Test
+    public void testboolsearch2() throws IOException{
+        //测试组合查询，这里是测试必须有原告和答辩,或者有法院和送达
+        File indexDir = new File(Constant.IndexPath); //获取索引
+        IndexReader reader = DirectoryReader.open(FSDirectory.open(indexDir.toPath()));
+        IndexSearcher searcher = new IndexSearcher(reader);
+        BooleanQuery query = new BooleanQuery();
+        BooleanQuery query1 = new BooleanQuery();
+        BooleanQuery query2 = new BooleanQuery();
+        Term term1 = new Term("wsnr", "原告");
+        Term term2 = new Term("wsnr", "答辩");
+        TermQuery tQuery1 = new TermQuery(term1);
+        TermQuery tQuery2 = new TermQuery(term2);
+        BooleanClause clause1=new BooleanClause(tQuery1, BooleanClause.Occur.MUST);
+        BooleanClause clause2=new BooleanClause(tQuery2, BooleanClause.Occur.MUST);
+        query1.add(clause1);
+        query1.add(clause2);
+        Term term3 = new Term("wsnr", "法院");
+        Term term4 = new Term("wsnr", "送达");
+        TermQuery tQuery3 = new TermQuery(term3);
+        TermQuery tQuery4 = new TermQuery(term4);
+        BooleanClause clause3=new BooleanClause(tQuery3, BooleanClause.Occur.MUST);
+        BooleanClause clause4=new BooleanClause(tQuery4, BooleanClause.Occur.MUST);
+        query2.add(clause3);
+        query2.add(clause4);
+        query.add(query1,BooleanClause.Occur.SHOULD);
+        query.add(query2,BooleanClause.Occur.SHOULD);
+        TopDocs topDocs = searcher.search(query, 1000);
+        int count = topDocs.totalHits;//根据关键词得到目录中中总的条目数
+        System.out.println("共查询到条目数:"+count);
+        ScoreDoc[] scoreDocs = topDocs.scoreDocs;
+        for (int i = 0; i < scoreDocs.length; i++) {
+            int doc1 = scoreDocs[i].doc;
+            Document document = searcher.doc(doc1);
+            log.info("第" + i + "篇");
+            log.info("编号:" + document.get("bh"));
+            log.info(document.get("bt"));
+            log.info(document.get("wsnr"));
         }
         reader.close();
     }

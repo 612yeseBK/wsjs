@@ -7,12 +7,16 @@ import javax.servlet.ServletContext;
 import java.util.Date;
 import java.util.TimerTask;
 
-public class updateTask extends TimerTask{
+/**
+ * description:用以在执行索引更新的定时器任务
+ * Created by gaoyw on 2018/4/7.
+ */
+public class UpdateTask extends TimerTask{
     private boolean isRunning = false;
     private ApplicationContext app;
     private ServletContext servletContext = null;
-    public updateTask(){}
-    public updateTask(ServletContext servletContext){
+    public UpdateTask(){}
+    public UpdateTask(ServletContext servletContext){
         this.servletContext = servletContext;
     }
     @Override

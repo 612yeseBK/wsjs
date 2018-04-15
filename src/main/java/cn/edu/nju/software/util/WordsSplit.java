@@ -10,6 +10,10 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * description:使用IK分词工具
+ * Created by gaoyw on 2018/4/6.
+ */
 public class WordsSplit {
 
     private static Logger log = Logger.getLogger(WordsSplit.class);

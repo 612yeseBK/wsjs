@@ -1,9 +1,12 @@
 package cn.edu.nju.software.service;
 
 import cn.edu.nju.software.model.dto.Back2Search;
+import cn.edu.nju.software.model.dto.SearchCondition;
 import cn.edu.nju.software.test.testluncene;
 import cn.edu.nju.software.util.Constant;
+import cn.edu.nju.software.util.Search2Field;
 import cn.edu.nju.software.util.WordsSplit;
+import exception.NoEnumException;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Document;
@@ -22,14 +25,20 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+/**
+ * description:搜索业务
+ * Created by gaoyw on 2018/4/7.
+ */
 @Service("searchService")
 public class SearchService {
     private static Logger log = Logger.getLogger(SearchService.class);
-    public List<Back2Search> searchByKeywords(String keywords) throws IOException, InvalidTokenOffsetsException {
-        List<String> splitedWords = WordsSplit.getWords(keywords);
-        BooleanQuery booleanQuery = getBQFormWords("wsnr",splitedWords);
+
+    public List<Back2Search> searchByContent(String content) throws IOException, InvalidTokenOffsetsException {
+        List<String> splitedWords = WordsSplit.getWords(content);
+        BooleanQuery booleanQuery = getQueryFormWords("wsnr",splitedWords,BooleanClause.Occur.MUST);
         File indexDir = new File(Constant.IndexPath); //获取索引
         IndexReader reader = DirectoryReader.open(FSDirectory.open(indexDir.toPath()));
         IndexSearcher searcher = new IndexSearcher(reader);
@@ -55,36 +64,76 @@ public class SearchService {
             TokenStream tokenStream = Constant.Analyzer.tokenStream("wsnr", new StringReader(wsnr));
             String summary = highlighter.getBestFragment(tokenStream, wsnr);
             back2Search.setHLContent(summary);
-            log.info(back2Search);
+//            log.info(back2Search);
             back2SearchList.add(back2Search);
         }
         reader.close();
         return back2SearchList;
     }
 
+    public List<Back2Search> searchByContentAndCondition(String content, List<SearchCondition> searchConditionList) throws IOException, InvalidTokenOffsetsException {
+        if (searchConditionList.size() == 0){
+            return searchByContent(content);
+        }
+        return null;
+    }
+
+    public BooleanQuery getQueryByContent(String content){
+        String[] words = content.trim().split("\\s+");
+        List<String> contents = Arrays.asList(words);
+        return getQueryFormWords(Search2Field.内容搜索.getLuceneField(),contents,BooleanClause.Occur.MUST);
+    }
+
     /**
-     * 将搜索的关键字和对应的field结合成一个query
-     * @param field lucene的域
-     * @param keywords 搜索的关键字 关联关系 与（MUST)
+     * 将前端返回的搜索条件合成一个BooleanQuery
+     * @param searchConditionList 前端返回的搜索条件
+     * @return
+     * @throws NoEnumException
+     */
+    public BooleanQuery getQueryFromConditions(List<SearchCondition> searchConditionList) throws NoEnumException {
+        BooleanQuery bcBq = new BooleanQuery();
+        for (SearchCondition searchCondition: searchConditionList){
+            String luceneField = Search2Field .getLucenefieldFromWebfield(searchCondition.getId());
+            BooleanQuery booleanQuery = getQueryFormWords(luceneField, searchCondition.getValue(),BooleanClause.Occur.SHOULD);
+            bcBq.add(booleanQuery,BooleanClause.Occur.MUST);
+        }
+        return bcBq;
+    }
+
+    /**
+     * 用于生成最基本的BooleanQuery
+     * @param field 要查询的lucene的域名
+     * @param keywords 需要查询的关键字的collection
+     * @param occur 这些关键字之间的关系
      * @return
      */
-    public BooleanQuery getBQFormWords(String field, List<String> keywords) {
+    public BooleanQuery getQueryFormWords(String field, List<String> keywords,BooleanClause.Occur occur) {
         BooleanQuery query = new BooleanQuery();
         for (String keyword : keywords) {
             Term term = new Term(field, keyword);
             TermQuery tQuery = new TermQuery(term);
-            BooleanClause clause = new BooleanClause(tQuery,
-                    BooleanClause.Occur.MUST);
+            BooleanClause clause = new BooleanClause(tQuery, occur);
             query.add(clause);
-            // api里两种写法：
-            // add(BooleanClause clause)与add(Query query, BooleanClause.Occur occur)
         }
         return query;
     }
 
+
     @Test
     public void testsearch() throws IOException, InvalidTokenOffsetsException {
-        searchByKeywords("原告");
+        searchByContent("原告");
+    }
+
+    @Test
+    public void testDivContent(){
+        String content = " nihao 不会  对     有趣   好的  ";
+//        String[] tt=content.split(" ");
+        content = content.trim();
+        String[] tt=content.split("\\s+");
+        for (String t:tt){
+            System.out.println("==" + t + "==");
+        }
+        System.out.println("######");
     }
 }
 

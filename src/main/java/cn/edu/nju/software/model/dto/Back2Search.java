@@ -1,8 +1,11 @@
 package cn.edu.nju.software.model.dto;
 import org.apache.lucene.document.*;
 
+/**
+ * description:搜索后用于返回前端的对象
+ * Created by gaoyw on 2018/4/8.
+ */
 public class Back2Search {
-    // 搜索后，用于返回给前端的对象
     private String id;
     private String bt;
     private String info;
