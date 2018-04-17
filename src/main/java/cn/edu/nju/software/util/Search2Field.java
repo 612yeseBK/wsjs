@@ -7,11 +7,16 @@ import exception.NoEnumException;
  * Created by gaoyw on 2018/4/14.
  */
 public enum Search2Field {
-    内容搜索("wsnr", "input"),
-    标题搜索("bt", "title"),
-    编号搜索("bh", "number");
-    Search2Field() {
-    }
+    文书内容("wsnr", "input"),
+    文件标题("bt", "title"),
+    文件编号("wjbh", "wjbh"),
+    主持人("zcr", "zcr"),
+    联络人("llr","llr"),
+    标准化文件名称("bzhwjmc", "bzhwjmc"),
+    承办单位("cbdw", "cbdw"),
+    协办单位("xbdw","xbdw"),
+    发布时间("date", "date");
+    Search2Field() {}
     /**
      * 这个构造方法默认是私有的
      */

@@ -1,18 +1,19 @@
 package cn.edu.nju.software.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity(name = "sfbzh_nrb")
-public class SFBZHNRB {
+@Entity
+@Table(name = "sfbzh_nrb")
+public class SFBZHNRB implements Serializable {
+
     /**
      * 	文件编号是指用来说明这条记录是属于哪一个文件的，
      * 	序号是指在同一个文件编号下，该文件各部分内容的组织顺序
      * 	标题是指文件的某一部分的小标题
      * 	内容是该段落的内容
      */
+    private static final long serialVersionUID = 1L;
     private int BH;     //编号
     private int WJBH;   //文件编号
     private int XH;     //序号
@@ -20,7 +21,7 @@ public class SFBZHNRB {
     private String NR;  //内容
 
     @Id
-    @Column(name = "BH", nullable = false, unique = true, length = 1)
+    @Column(name = "BH", nullable = false, unique = true)
     public int getBH() {
         return BH;
     }
@@ -29,6 +30,7 @@ public class SFBZHNRB {
         this.BH = BH;
     }
 
+    @Column(name = "WJBH")
     public int getWJBH() {
         return WJBH;
     }
@@ -37,6 +39,7 @@ public class SFBZHNRB {
         this.WJBH = WJBH;
     }
 
+    @Column(name = "XH")
     public int getXH() {
         return XH;
     }
@@ -45,6 +48,7 @@ public class SFBZHNRB {
         this.XH = XH;
     }
 
+    @Column(name = "BT")
     public String getBT() {
         return BT;
     }
@@ -53,6 +57,7 @@ public class SFBZHNRB {
         this.BT = BT;
     }
 
+    @Column(name = "NR")
     public String getNR() {
         return NR;
     }

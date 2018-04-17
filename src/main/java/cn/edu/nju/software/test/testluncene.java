@@ -15,7 +15,9 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.search.highlight.*;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.RAMDirectory;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -36,7 +38,7 @@ public class testluncene {
 
     @Test
     public void wordSplit() {
-        String keywords = "我今天一直在写代码";
+        String keywords = "你好";
         WordsSplit.getWords(keywords);
     }
 
@@ -238,6 +240,59 @@ public class testluncene {
             String summary = highlighter.getBestFragment(tokenStream, wsnr);
             System.out.println("高亮之后：" + summary);
 
+        }
+        reader.close();
+    }
+
+    // 同一个域里面可以存储多个值,但是查不到
+    @Test
+    public void testDivStore() throws IOException {
+        Directory directory = new RAMDirectory();
+        IndexWriterConfig iwc = new IndexWriterConfig(Constant.Analyzer);
+        // 设置模式
+        iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+        IndexWriter indexWriter;
+        indexWriter = new IndexWriter(directory, iwc);
+        Document doc3 = new Document();
+        doc3.add(new StringField("bh", "3", Field.Store.YES));
+        doc3.add(new StringField("bh", "11", Field.Store.YES));
+        doc3.add(new StringField("bh", "13", Field.Store.YES));
+        doc3.add(new IntField("sortField", 3, Constant.Int_FIELD_TYPE_STORED_SORTED));
+        indexWriter.addDocument(doc3);
+        Document doc1 = new Document();
+        doc1.add(new StringField("bh", "1", Field.Store.YES));
+        doc1.add(new StringField("bh", "11", Field.Store.YES));
+        doc1.add(new StringField("bh", "13", Field.Store.YES));
+        doc1.add(new IntField("sortField", 1, Constant.Int_FIELD_TYPE_STORED_SORTED));
+        indexWriter.addDocument(doc1);
+        Document doc2 = new Document();
+        doc2.add(new StringField("bh", "2", Field.Store.YES));
+        doc2.add(new StringField("bh", "11", Field.Store.YES));
+        doc2.add(new IntField("sortField", 2, Constant.Int_FIELD_TYPE_STORED_SORTED));
+//        doc2.add(new StringField("bh", "13", Field.Store.YES));
+        indexWriter.addDocument(doc2);
+        indexWriter.commit();
+        indexWriter.close();
+        IndexReader reader = DirectoryReader.open(directory);
+        IndexSearcher searcher = new IndexSearcher(reader);
+        TopDocs hits = null;
+        ScoreDoc[] scoreDocs = null;
+        Term term=new Term("bh", "11");
+        Query query=new TermQuery(term);
+        SortField[] sortField = new SortField[1];
+        sortField[0] = new SortField("sortField",SortField.Type.INT,false); // 对sortField的域进行降序升序排列
+        Sort sort = new Sort(sortField);
+        TopDocs topDocs = searcher.search(query, 1000, sort);
+        int count = topDocs.totalHits;//根据关键词得到目录中中总的条目数
+        System.out.println("共查询到条目数:"+count);
+        scoreDocs = topDocs.scoreDocs;
+        for (int i = 0; i < scoreDocs.length; i++) {
+            int doc = scoreDocs[i].doc;
+            log.info(scoreDocs[i]);
+            Document document = searcher.doc(doc);
+            log.info(document.getField("bh").stringValue());
+            System.out.println("第" + i + "篇");
+            System.out.println("编号:" + document.get("bh"));
         }
         reader.close();
     }

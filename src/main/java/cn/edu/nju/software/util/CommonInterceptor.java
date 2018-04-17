@@ -19,7 +19,7 @@ public class CommonInterceptor implements HandlerInterceptor {
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD"); // or *
         // httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
         httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type, MUserAgent, MToken, UID"); // or *
-        log.info("=========添加了跨域响应头==========");
+//        log.info("=========添加了跨域响应头==========");
         return true;
     }
 

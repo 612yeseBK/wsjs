@@ -1,25 +1,13 @@
-package cn.edu.nju.software.model.entity;
+package cn.edu.nju.software.model.dto;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.core.annotation.Order;
-
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
-@Entity
-@Table(name = "SFBZH_WJB")
-public class SFBZHWJB implements Serializable{
-    /**
-     * 	只需要具有搜索功能即可，所以就不指定别的信息
-     */
-    private static final long serialVersionUID = 1L;
-    private int BH;//编号
+public class SFBZHModel {
+
+    private int WJBH;   //文件编号
+
+    private String NR;  //内容
+
     private String BZHWJLX;//标准化文件类型
     private String BZHWJMC;//标准化文件名称
     private String ZCR;//主持人
@@ -32,17 +20,22 @@ public class SFBZHWJB implements Serializable{
     private String BZHWJZMC;//标准化文件子名称
     private Date XDSJ;//修订时间
 
-    @Id
-    @Column(name = "BH", nullable = false, unique = true, length = 1)
-    public int getBH() {
-        return BH;
+    public int getWJBH() {
+        return WJBH;
     }
 
-    public void setBH(int BH) {
-        this.BH = BH;
+    public void setWJBH(int WJBH) {
+        this.WJBH = WJBH;
     }
 
-    @Column(name="BZHWJLX")
+    public String getNR() {
+        return NR;
+    }
+
+    public void setNR(String NR) {
+        this.NR = NR;
+    }
+
     public String getBZHWJLX() {
         return BZHWJLX;
     }
@@ -51,7 +44,6 @@ public class SFBZHWJB implements Serializable{
         this.BZHWJLX = BZHWJLX;
     }
 
-    @Column(name="BZHWJMC")
     public String getBZHWJMC() {
         return BZHWJMC;
     }
@@ -60,7 +52,6 @@ public class SFBZHWJB implements Serializable{
         this.BZHWJMC = BZHWJMC;
     }
 
-    @Column(name="ZCR")
     public String getZCR() {
         return ZCR;
     }
@@ -69,7 +60,6 @@ public class SFBZHWJB implements Serializable{
         this.ZCR = ZCR;
     }
 
-    @Column(name="CBDW")
     public String getCBDW() {
         return CBDW;
     }
@@ -78,7 +68,6 @@ public class SFBZHWJB implements Serializable{
         this.CBDW = CBDW;
     }
 
-    @Column(name="XBDW")
     public String getXBDW() {
         return XBDW;
     }
@@ -87,7 +76,6 @@ public class SFBZHWJB implements Serializable{
         this.XBDW = XBDW;
     }
 
-    @Column(name="FBDW")
     public String getFBDW() {
         return FBDW;
     }
@@ -96,7 +84,6 @@ public class SFBZHWJB implements Serializable{
         this.FBDW = FBDW;
     }
 
-    @Column(name="FBSJ")
     public Date getFBSJ() {
         return FBSJ;
     }
@@ -105,7 +92,6 @@ public class SFBZHWJB implements Serializable{
         this.FBSJ = FBSJ;
     }
 
-    @Column(name="BBH")
     public String getBBH() {
         return BBH;
     }
@@ -114,7 +100,6 @@ public class SFBZHWJB implements Serializable{
         this.BBH = BBH;
     }
 
-    @Column(name="LLR")
     public String getLLR() {
         return LLR;
     }
@@ -123,7 +108,6 @@ public class SFBZHWJB implements Serializable{
         this.LLR = LLR;
     }
 
-    @Column(name="BZHWJZMC")
     public String getBZHWJZMC() {
         return BZHWJZMC;
     }
@@ -132,7 +116,6 @@ public class SFBZHWJB implements Serializable{
         this.BZHWJZMC = BZHWJZMC;
     }
 
-    @Column(name="XDSJ")
     public Date getXDSJ() {
         return XDSJ;
     }
@@ -140,5 +123,6 @@ public class SFBZHWJB implements Serializable{
     public void setXDSJ(Date XDSJ) {
         this.XDSJ = XDSJ;
     }
+
 
 }

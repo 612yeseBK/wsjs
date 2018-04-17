@@ -26,10 +26,10 @@ public class UpdateTask extends TimerTask{
 //        app.getBean("searchService");
         if (!isRunning) {
             isRunning = true;
-            System.out.println("开始执行更新索引库任务..."); //开始任务
+//            System.out.println("开始执行更新索引库任务..."); //开始任务
             System.out.println(new Date());
             //TODO  需要执行任务的代码
-            System.out.println("执行任务完成..."); //任务完成
+//            System.out.println("执行任务完成..."); //任务完成
             isRunning = false;
         } else {
             System.out.println("上一次任务执行还未结束..."); //上一次任务执行还未结束

@@ -22,4 +22,11 @@ public class SFBZHWJBDao {
         return l;
     }
 
+    public List<SFBZHWJB> findWjb(){
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "from SFBZHWJB";
+        List<SFBZHWJB> list = (List<SFBZHWJB>)session.createQuery(hql).list();
+        return list;
+    }
+
 }

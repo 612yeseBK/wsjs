@@ -45,7 +45,7 @@ public class WordsSplit {
             tokens.clear();
             tokens.add(keyword);
         }
-        log.info(tokens);
+//        log.info("分词结果为：" + tokens);
         return tokens;
     }
 }
