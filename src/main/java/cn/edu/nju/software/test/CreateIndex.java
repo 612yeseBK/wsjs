@@ -1,13 +1,8 @@
 package cn.edu.nju.software.test;
 
-import cn.edu.nju.software.model.dao.SFBZHNRBDao;
-import cn.edu.nju.software.model.dao.SFBZHWJBDao;
 import cn.edu.nju.software.service.WszhService;
 import cn.edu.nju.software.model.dto.SFBZHModel;
-import cn.edu.nju.software.util.StringUtil;
-
 import cn.edu.nju.software.util.Constant;
-
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -26,16 +21,12 @@ import org.apache.lucene.store.SimpleFSDirectory;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class CreateIndex{
     private static ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-    static SFBZHWJBDao sfbzhwjbDao = (SFBZHWJBDao) appContext.getBean("SFBZHWJBDao");
-    static SFBZHNRBDao sfbzhnrbDao = (SFBZHNRBDao)appContext.getBean("SFBZHNRBDao");
     WszhService WszhService = (WszhService) appContext.getBean("wszhService");
 
 

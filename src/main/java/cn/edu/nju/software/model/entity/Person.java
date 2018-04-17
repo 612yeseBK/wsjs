@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Entity(name = "jpa_persons")
 public class Person implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private String id;
 
     private String name;

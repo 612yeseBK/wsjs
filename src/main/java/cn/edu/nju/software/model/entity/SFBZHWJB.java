@@ -1,24 +1,14 @@
 package cn.edu.nju.software.model.entity;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.core.annotation.Order;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
-@Entity
-@Table(name = "SFBZH_WJB")
-public class SFBZHWJB implements Serializable{
+
+@Entity(name = "SFBZH_WJB")
+public class SFBZHWJB{
     /**
      * 	只需要具有搜索功能即可，所以就不指定别的信息
      */
-    private static final long serialVersionUID = 1L;
     private int BH;//编号
     private String BZHWJLX;//标准化文件类型
     private String BZHWJMC;//标准化文件名称

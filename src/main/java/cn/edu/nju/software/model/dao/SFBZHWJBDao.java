@@ -1,7 +1,5 @@
 package cn.edu.nju.software.model.dao;
 
-import cn.edu.nju.software.model.entity.Person;
-import cn.edu.nju.software.model.entity.SFBZHNRB;
 import cn.edu.nju.software.model.entity.SFBZHWJB;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
