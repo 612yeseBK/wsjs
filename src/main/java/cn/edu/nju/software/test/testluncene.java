@@ -292,7 +292,8 @@ public class testluncene {
             Document document = searcher.doc(doc);
             log.info(document.getField("bh").stringValue());
             System.out.println("第" + i + "篇");
-            System.out.println("编号:" + document.get("bh"));
+            System.out.println("编号:");
+            log.info(document.getValues("bh")[0]+document.getValues("bh")[1]);
         }
         reader.close();
     }

@@ -2,7 +2,8 @@ package cn.edu.nju.software.model.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "sfbzh_nrb")
+@Entity
+@Table(name = "sfbzh_nrb")
 public class SFBZHNRB {
 
     /**

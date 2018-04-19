@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- 自动扫描注解的bean -->
+    <context:component-scan base-package="cn.edu.nju.software.service;cn.edu.nju.software.model.dao">
+        <!-- 扫描时跳过 @Controller 注解的JAVA类（控制器） -->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--********************************************配置hibernate********************************************-->
+
+    <!--扫描配置文件-->
+    <context:property-placeholder location="classpath:*.properties" />
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driver}" />  <!--数据库连接驱动-->
+        <property name="jdbcUrl" value="${jdbc.url}" />     <!--数据库地址-->
+        <property name="user" value="${jdbc.username}" />   <!--用户名-->
+        <property name="password" value="${jdbc.password}" />   <!--密码-->
+        <property name="maxPoolSize" value="40" />      <!--最大连接数-->
+        <property name="minPoolSize" value="1" />       <!--最小连接数-->
+        <property name="initialPoolSize" value="10" />      <!--初始化连接池内的数据库连接-->
+        <property name="maxIdleTime" value="20" />  <!--最大空闲时间-->
+    </bean>
+
+    <!--配置session工厂-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="packagesToScan" >
+            <list>
+                <value>cn.edu.nju.software.model.entity</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 事物管理器配置  -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <!-- 配置支持基于注解的事务配置 默认配置transactionManager-->
+    <tx:annotation-driven/>
+
+    <!--************************************jpa配置*********************************************-->
+    <!-- 配置 EntityManagerFactory -->
+    <!--<bean id="entityManagerFactory"-->
+          <!--class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+        <!--&lt;!&ndash; 配置数据源 &ndash;&gt;-->
+        <!--<property name="dataSource" ref="dataSource"></property>-->
+        <!--&lt;!&ndash; 配置 JPA 提供商的适配器，可以通过内部 bean 的方式来配置 &ndash;&gt;-->
+        <!--<property name="jpaVendorAdapter">-->
+            <!--<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 配置实体类所在的包 &ndash;&gt;-->
+        <!--<property name="packagesToScan" value="cn.edu.nju.software.model"></property>-->
+        <!--&lt;!&ndash; 配置 JPA 的基本属性，比如，JPA 实现产品的属性 &ndash;&gt;-->
+        <!--<property name="jpaProperties">-->
+            <!--<props>-->
+                <!--<prop key="hibernate.dialect">${hibernate.dialect}</prop>-->
+                <!--<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>-->
+                <!--<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash; 配置  JPA 使用的事务管理器 &ndash;&gt;-->
+    <!--<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
+        <!--<property name="entityManagerFactory" ref="entityManagerFactory"></property>-->
+    <!--</bean>-->
+
+
+    <!--********************************************配置mybatis********************************************-->
+    <!-- 配置数据源 -->
+    <!--<bean id="dataSource" class="com.nju.zjsbs.utils.NjuDriverManagerDataSouce" />-->
+
+    <!-- 自动扫描了所有的XxxxMapper.xml对应的mapper接口文件，这样就不用一个一个手动配置Mpper的映射了，只要Mapper接口类和Mapper映射文件对应起来就可以了。 -->
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+        <!--<property name="basePackage"-->
+                  <!--value="com.nju.**.cn.edu.nju.software.data.dao" />-->
+    <!--</bean>-->
+
+    <!-- 配置Mybatis的文件 ，mapperLocations配置**Mapper.xml文件位置，configLocation配置mybatis-config文件位置-->
+    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource" />-->
+        <!--<property name="mapperLocations" value="classpath*:mapping/*.xml"/>-->
+        <!--<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />-->
+        <!--&lt;!&ndash; <property name="typeAliasesPackage" value="com.tiantian.ckeditor.model" -->
+            <!--/> &ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--反射类时获取spring管理的上下文实例-->
+    <!--<bean id="spring_context" class="com.nju.zjsbs.utils.spring_context"/>-->
+
+
+</beans>

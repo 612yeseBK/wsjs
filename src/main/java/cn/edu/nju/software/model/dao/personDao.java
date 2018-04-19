@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("personDao")
 public class personDao {
 
@@ -17,8 +19,10 @@ public class personDao {
         session.save(person);
     }
 
-    //    public Person findByName(String Name) {
-//        Session session = sessionFactory.getCurrentSession();
-//        session.
-//    }
+    public List<Person> findAll() {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "from Person";
+        List<Person> l = (List<Person>)session.createQuery(hql).list();
+        return l;
+    }
 }

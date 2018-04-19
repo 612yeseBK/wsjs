@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Entity(name = "jpa_persons")
-public class Person implements Serializable {
+@Entity
+@Table(name = "jpa_persons")
+public class Person {
 
-    private static final long serialVersionUID = 1L;
     private String id;
 
     private String name;

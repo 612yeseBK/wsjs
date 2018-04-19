@@ -21,4 +21,5 @@ public class testCombineWs {
         list = wszhService.findWS();
         System.out.println(list.get(1).getNR());
     }
+
 }

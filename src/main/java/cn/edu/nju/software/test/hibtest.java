@@ -10,6 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.List;
 
 public class hibtest {
 
@@ -63,6 +64,13 @@ public class hibtest {
     public void testService() throws SQLException {
         ExampleService ExampleService =  (ExampleService) ctx.getBean("exampleService");
         ExampleService.savePerson();
+    }
+
+    @Test
+    public void testS() throws SQLException {
+        ExampleService ExampleService =  (ExampleService) ctx.getBean("exampleService");
+        List<Person> l = ExampleService.findAllPerson();
+        System.out.println(l);
     }
 
 }

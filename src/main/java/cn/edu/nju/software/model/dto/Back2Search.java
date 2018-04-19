@@ -6,25 +6,34 @@ import org.apache.lucene.document.*;
  * Created by gaoyw on 2018/4/8.
  */
 public class Back2Search {
-    private String id;
+    private String wjbh;
+    private int docid;
     private String bt;
     private String info;
     private String HLContent;
 
     public Back2Search() {}
     public Back2Search(Document document){
-        this.id = document.get("id");
-        this.bt = document.get("bt");
+        this.wjbh = document.get("wjbh");
+//        this.bt = document.get("bt");
+        this.bt = "这里展示标题";
         this.info = "发布时间：2015年12月16日  主持人：xxx  主持单位：xxxx高院";
         this.HLContent = document.get("wsnr");
     }
 
-    public String getId() {
-        return id;
+    public int getDocid() {
+        return docid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDocid(int docid) {
+        this.docid = docid;
+    }
+    public String getWjbh() {
+        return wjbh;
+    }
+
+    public void setWjbh(String wjbh) {
+        this.wjbh = wjbh;
     }
 
     public String getBt() {
@@ -53,6 +62,6 @@ public class Back2Search {
 
     @Override
     public String toString(){
-        return "id:"+this.id+"\n标题："+this.bt+"\n信息："+this.info+"\n高亮："+this.HLContent;
+        return "id:"+this.wjbh+"\n标题："+this.bt+"\n信息："+this.info+"\n高亮："+this.HLContent;
     }
 }

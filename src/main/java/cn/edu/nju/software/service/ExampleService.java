@@ -27,4 +27,10 @@ public class ExampleService {
         List<SFBZHNRB> l = sfbzhnrbDao.findAll();
         return l;
     }
+
+    @Transactional
+    public List<Person> findAllPerson() {
+        List<Person> l = personDao.findAll();
+        return l;
+    }
 }
